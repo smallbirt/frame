@@ -1,6 +1,7 @@
 package cn.ppy.test.domain;
 
 import cn.ppy.domain.strategy.service.armory.IStrategyArmory;
+import cn.ppy.domain.strategy.service.armory.IStrategyDispatch;
 import cn.ppy.infrastructure.persistent.redis.IRedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -24,13 +25,15 @@ public class StrategyTest {
 
     @Resource
     private IStrategyArmory strategyArmory;
+    @Resource
+    private IStrategyDispatch strategyDispatch;
 
     /**
      * 策略ID；100001L、100002L 装配的时候创建策略表写入到 Redis Map 中
      */
     @Test
     public void test_strategyArmory() {
-        boolean success = strategyArmory.assembleLotteryStrategy(100002L);
+        boolean success = strategyArmory.assembleLotteryStrategy(100001L);
         log.info("测试结果：{}", success);
     }
 
@@ -39,7 +42,20 @@ public class StrategyTest {
      */
     @Test
     public void test_getAssembleRandomVal() {
-        log.info("测试结果：{} - 奖品ID值", strategyArmory.getRandomAwardId(100002L));
+        log.info("测试结果：{} - 奖品ID值", strategyDispatch.getRandomAwardId(100001L));
+    }
+
+
+    /**
+     * 从装配的策略中随机获取奖品ID值
+     */
+    @Test
+    public void test_getAssembleRandomVal2() {
+        Object bigMarketStrategyAwardKey100002 = redisService.getValue("big_market_strategy_award_key_100002");
+        Object sa12 = redisService.getValue("big_market_strategy_rate_range_key_100002");
+
+
+        log.info("测试结果：{} - 奖品ID值", redisService.getQueue("big_market_strategy_rate_range_key_100002"));
     }
 
     @Resource
