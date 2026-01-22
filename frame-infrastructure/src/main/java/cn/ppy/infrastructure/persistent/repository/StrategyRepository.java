@@ -53,6 +53,7 @@ public class StrategyRepository implements IStrategyRepository {
                     .awardId(strategyAward.getAwardId())
                     .awardCount(strategyAward.getAwardCount())
                     .awardCountSurplus(strategyAward.getAwardCountSurplus())
+                    .ruleModels(strategyAward.getRuleModels())
                     .awardRate(strategyAward.getAwardRate())
                     .build();
             strategyAwardEntities.add(strategyAwardEntity);

@@ -47,15 +47,13 @@ public class StrategyTest {
 
 
     /**
-     * 从装配的策略中随机获取奖品ID值
+     * 根据策略ID+权重值，从装配的策略中随机获取奖品ID值
      */
     @Test
-    public void test_getAssembleRandomVal2() {
-        Object bigMarketStrategyAwardKey100002 = redisService.getValue("big_market_strategy_award_key_100002");
-        Object sa12 = redisService.getValue("big_market_strategy_rate_range_key_100002");
-
-
-        log.info("测试结果：{} - 奖品ID值", redisService.getQueue("big_market_strategy_rate_range_key_100002"));
+    public void test_getRandomAwardId_ruleWeightValue() {
+        log.info("测试结果：{} - 4000 策略配置", strategyDispatch.getRandomAwardId(100001L, "4000:102,103,104,105"));
+        log.info("测试结果：{} - 5000 策略配置", strategyDispatch.getRandomAwardId(100001L, "5000:102,103,104,105,106,107"));
+        log.info("测试结果：{} - 6000 策略配置", strategyDispatch.getRandomAwardId(100001L, "6000:102,103,104,105,106,107,108,109"));
     }
 
     @Resource
