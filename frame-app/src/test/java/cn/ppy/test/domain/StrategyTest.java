@@ -1,14 +1,22 @@
 package cn.ppy.test.domain;
 
+import cn.ppy.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.ppy.domain.strategy.model.entity.RaffleFactorEntity;
+import cn.ppy.domain.strategy.service.IRaffleStrategy;
 import cn.ppy.domain.strategy.service.armory.IStrategyArmory;
 import cn.ppy.domain.strategy.service.armory.IStrategyDispatch;
+import cn.ppy.domain.strategy.service.raffle.AbstractRaffleStrategy;
+import cn.ppy.domain.strategy.service.rule.impl.RuleWeightLogicFilter;
 import cn.ppy.infrastructure.persistent.redis.IRedisService;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RMap;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -27,6 +35,7 @@ public class StrategyTest {
     private IStrategyArmory strategyArmory;
     @Resource
     private IStrategyDispatch strategyDispatch;
+
 
     /**
      * 策略ID；100001L、100002L 装配的时候创建策略表写入到 Redis Map 中
