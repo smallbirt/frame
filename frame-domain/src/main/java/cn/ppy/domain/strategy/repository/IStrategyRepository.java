@@ -3,6 +3,7 @@ package cn.ppy.domain.strategy.repository;
 import cn.ppy.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.ppy.domain.strategy.model.entity.StrategyEntity;
 import cn.ppy.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.ppy.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,4 +29,6 @@ public interface IStrategyRepository {
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
+
+    StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
 }

@@ -5,6 +5,7 @@ import cn.ppy.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.ppy.domain.strategy.model.entity.RuleActionEntity;
 import cn.ppy.domain.strategy.model.entity.StrategyEntity;
 import cn.ppy.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
+import cn.ppy.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import cn.ppy.domain.strategy.repository.IStrategyRepository;
 import cn.ppy.domain.strategy.service.IRaffleStrategy;
 import cn.ppy.domain.strategy.service.armory.IStrategyDispatch;
@@ -67,11 +68,21 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         // 4. 默认抽奖流程
         Integer awardId = strategyDispatch.getRandomAwardId(strategyId);
 
+        //5.查询奖品规则「抽奖中（拿到奖品ID时，过滤规则）、抽奖后（扣减完奖品库存后过滤，抽奖中拦截和无库存则走兜底）」
+        StrategyAwardRuleModelVO strategyAwardRuleModelVO =  repository.queryStrategyAwardRuleModelVO(strategyId, awardId);
+
+        // 6. 抽奖中 - 规则过滤
+        RuleActionEntity<RuleActionEntity.RaffleCenterEntity> ruleActionCenterEntity = this.doCheckRaffleCenterLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).build(), strategy.ruleModels());
+
+
         return RaffleAwardEntity.builder()
                 .awardId(awardId)
                 .build();
     }
 
     protected abstract RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> doCheckRaffleBeforeLogic(RaffleFactorEntity raffleFactorEntity, String... logics);
+
+    protected abstract RuleActionEntity<RuleActionEntity.RaffleCenterEntity> doCheckRaffleCenterLogic(RaffleFactorEntity raffleFactorEntity, String... logics);
+
 
 }
