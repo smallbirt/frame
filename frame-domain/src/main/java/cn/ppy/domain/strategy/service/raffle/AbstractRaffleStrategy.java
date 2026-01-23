@@ -9,7 +9,7 @@ import cn.ppy.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import cn.ppy.domain.strategy.repository.IStrategyRepository;
 import cn.ppy.domain.strategy.service.IRaffleStrategy;
 import cn.ppy.domain.strategy.service.armory.IStrategyDispatch;
-import cn.ppy.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import cn.ppy.domain.strategy.service.rule.fifter.factory.DefaultLogicFactory;
 import cn.ppy.types.enums.ResponseCode;
 import cn.ppy.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -72,8 +72,14 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         StrategyAwardRuleModelVO strategyAwardRuleModelVO =  repository.queryStrategyAwardRuleModelVO(strategyId, awardId);
 
         // 6. 抽奖中 - 规则过滤
-        RuleActionEntity<RuleActionEntity.RaffleCenterEntity> ruleActionCenterEntity = this.doCheckRaffleCenterLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).build(), strategy.ruleModels());
+        RuleActionEntity<RuleActionEntity.RaffleCenterEntity> ruleActionCenterEntity = this.doCheckRaffleCenterLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).build(), strategyAwardRuleModelVO.raffleCenterRuleModelList());
 
+        if (RuleLogicCheckTypeVO.TAKE_OVER.getCode().equals(ruleActionCenterEntity.getCode())){
+            log.info("【临时日志】中奖中规则拦截，通过抽奖后规则 rule_luck_award 走兜底奖励。");
+            return RaffleAwardEntity.builder()
+                    .awardDesc("中奖中规则拦截，通过抽奖后规则 rule_luck_award 走兜底奖励。")
+                    .build();
+        }
 
         return RaffleAwardEntity.builder()
                 .awardId(awardId)

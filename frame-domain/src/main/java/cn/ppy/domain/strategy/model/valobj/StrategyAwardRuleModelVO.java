@@ -1,6 +1,6 @@
 package cn.ppy.domain.strategy.model.valobj;
 
-import cn.ppy.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import cn.ppy.domain.strategy.service.rule.fifter.factory.DefaultLogicFactory;
 import cn.ppy.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥

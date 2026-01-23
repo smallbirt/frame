@@ -1,4 +1,4 @@
-package cn.ppy.domain.strategy.service.rule;
+package cn.ppy.domain.strategy.service.rule.fifter;
 
 
 import cn.ppy.domain.strategy.model.entity.RuleActionEntity;
