@@ -19,7 +19,7 @@ public abstract class AbstractLogicChain implements ILogicChain {
 
     @Override
     public ILogicChain appendNext(ILogicChain next) {
-        this.next = next;
+        this.next = next; 
         return next;
     }
 
