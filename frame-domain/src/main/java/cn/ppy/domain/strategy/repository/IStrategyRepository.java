@@ -45,4 +45,8 @@ public interface IStrategyRepository {
     void awardStockConsumeSendQueue(StrategyAwardStockKeyVO build);
 
     Boolean subtractionAwardStock(String cacheKey);
+
+    StrategyAwardStockKeyVO takeQueueValue();
+
+    void updateStrategyAwardStock(Long strategyId, Integer awardId);
 }

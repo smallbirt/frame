@@ -241,5 +241,20 @@ public class StrategyRepository implements IStrategyRepository {
         return lock;
     }
 
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        RBlockingQueue<StrategyAwardStockKeyVO> destinationQueue = redisService.getBlockingQueue(cacheKey);
+        return destinationQueue.poll();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        strategyAwardDao.updateStrategyAwardStock(strategyAward);
+    }
+
 
 }

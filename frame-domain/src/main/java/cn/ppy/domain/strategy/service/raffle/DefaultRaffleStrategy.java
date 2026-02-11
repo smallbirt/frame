@@ -48,11 +48,11 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
 
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
-        return null;
+        return repository.takeQueueValue();
     }
 
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
-
+        repository.updateStrategyAwardStock(strategyId, awardId);
     }
 }
