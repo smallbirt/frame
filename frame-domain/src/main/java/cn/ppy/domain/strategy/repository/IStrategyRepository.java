@@ -3,7 +3,9 @@ package cn.ppy.domain.strategy.repository;
 import cn.ppy.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.ppy.domain.strategy.model.entity.StrategyEntity;
 import cn.ppy.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.ppy.domain.strategy.model.valobj.RuleTreeVO;
 import cn.ppy.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import cn.ppy.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,6 +26,8 @@ public interface IStrategyRepository {
 
     int getRateRange(String key);
 
+    int getRateRange(Long strategyId);
+
     StrategyEntity queryStrategyEntityByStrategyId(Long strategyId);
 
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
@@ -33,4 +37,12 @@ public interface IStrategyRepository {
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 
     StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
+
+    RuleTreeVO queryRuleTreeVOByTreeId(String ruleModels);
+
+    void cacheStrategyAwardCount(String cacheKey, Integer awardCount);
+
+    void awardStockConsumeSendQueue(StrategyAwardStockKeyVO build);
+
+    Boolean subtractionAwardStock(String cacheKey);
 }

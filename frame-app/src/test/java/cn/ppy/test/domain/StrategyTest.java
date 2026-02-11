@@ -105,4 +105,11 @@ public class StrategyTest {
         }
     }
 
+
+    @Test
+    public void test_redis(){
+
+
+    }
+
 }
