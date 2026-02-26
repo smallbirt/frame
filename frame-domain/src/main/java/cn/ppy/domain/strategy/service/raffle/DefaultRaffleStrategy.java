@@ -1,5 +1,6 @@
 package cn.ppy.domain.strategy.service.raffle;
 
+import cn.ppy.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.ppy.domain.strategy.model.valobj.RuleTreeVO;
 import cn.ppy.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import cn.ppy.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
@@ -12,6 +13,8 @@ import cn.ppy.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import cn.ppy.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
@@ -54,5 +57,10 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
         repository.updateStrategyAwardStock(strategyId, awardId);
+    }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        return repository.queryStrategyAwardList(strategyId);
     }
 }
